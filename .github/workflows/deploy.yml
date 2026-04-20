@@ -26,7 +26,7 @@ jobs:
           pip install requests beautifulsoup4
 
       - name: Generate sample data
-        run: python scraper/scraper.py --sample
+        run: python scraper.py --sample
 
       - name: Run handler tests
         run: |
@@ -47,7 +47,7 @@ jobs:
           python-version: "3.12"
 
       - name: Generate sample data (needed for filemd5)
-        run: python scraper/scraper.py --sample
+        run: python scraper.py --sample
 
       - uses: hashicorp/setup-terraform@v3
         with:
@@ -86,7 +86,7 @@ jobs:
         run: pip install requests beautifulsoup4
 
       - name: Generate data
-        run: python scraper/scraper.py --sample
+        run: python scraper.py --sample
 
       - uses: aws-actions/configure-aws-credentials@v4
         with:
