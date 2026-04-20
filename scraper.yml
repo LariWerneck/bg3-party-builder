@@ -1,0 +1,46 @@
+name: Weekly Scraper
+
+on:
+  schedule:
+    - cron: "0 3 * * 0"  # domingo 03:00 UTC
+  workflow_dispatch:       # permite rodar manualmente pelo GitHub
+
+env:
+  AWS_REGION: us-east-2
+
+jobs:
+  scrape-and-update:
+    name: Scrape wiki and update S3
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r scraper/requirements.txt
+
+      - name: Run scraper
+        run: python scraper/scraper.py
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Upload updated data to S3
+        run: |
+          aws s3 cp data/companions.json      s3://${{ secrets.DATA_BUCKET }}/companions.json
+          aws s3 cp data/approval_events.json s3://${{ secrets.DATA_BUCKET }}/approval_events.json
+          aws s3 cp data/pages.json           s3://${{ secrets.DATA_BUCKET }}/pages.json
+          echo "Data updated at $(date)"
