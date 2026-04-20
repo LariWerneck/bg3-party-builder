@@ -1,6 +1,6 @@
 output "api_url" {
   description = "URL da API publica"
-  value       = "${aws_api_gateway_stage.main.invoke_url}"
+  value       = aws_api_gateway_stage.main.invoke_url
 }
 
 output "data_bucket_name" {

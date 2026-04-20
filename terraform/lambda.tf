@@ -26,7 +26,7 @@ resource "aws_iam_role_policy_attachment" "lambda_logs" {
 # Permissao para ler o S3
 data "aws_iam_policy_document" "lambda_s3" {
   statement {
-    actions   = ["s3:GetObject", "s3:ListBucket"]
+    actions = ["s3:GetObject", "s3:ListBucket"]
     resources = [
       aws_s3_bucket.data.arn,
       "${aws_s3_bucket.data.arn}/*"
