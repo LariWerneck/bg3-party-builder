@@ -11,24 +11,19 @@ env:
   TF_VERSION: 1.7.0
 
 jobs:
-  # --------------------------------------------------
-  # Job 1: Testa o handler Python
-  # --------------------------------------------------
   test:
     name: Test Lambda
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
       - name: Install dependencies
-        run: pip install -r scraper/requirements.txt
+        run: |
+          pip install requests beautifulsoup4
 
       - name: Generate sample data
         run: python scraper/scraper.py --sample
@@ -39,25 +34,26 @@ jobs:
           python lambda/handler.py villain
           python lambda/handler.py scholar
         env:
-          DATA_BUCKET: ""  # força modo local nos testes
+          DATA_BUCKET: ""
 
-  # --------------------------------------------------
-  # Job 2: Valida o Terraform (roda em PRs também)
-  # --------------------------------------------------
   terraform-validate:
     name: Terraform Validate
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Generate sample data (needed for filemd5)
+        run: python scraper/scraper.py --sample
+
+      - uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: ${{ env.TF_VERSION }}
 
-      - name: Terraform Init (local backend)
+      - name: Terraform Init
         run: terraform init -backend=false
         working-directory: terraform
 
@@ -69,9 +65,6 @@ jobs:
         run: terraform fmt -check -recursive
         working-directory: terraform
 
-  # --------------------------------------------------
-  # Job 3: Deploy — só roda no push para main
-  # --------------------------------------------------
   deploy:
     name: Deploy to AWS
     runs-on: ubuntu-latest
@@ -79,42 +72,37 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
     permissions:
-      id-token: write   # necessário para OIDC
+      id-token: write
       contents: read
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Configure AWS credentials (OIDC)
-        uses: aws-actions/configure-aws-credentials@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+
+      - name: Generate data
+        run: python scraper/scraper.py --sample
+
+      - uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+      - uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: ${{ env.TF_VERSION }}
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Generate data (scraper)
-        run: python scraper/scraper.py --sample
-        # Em prod, troca --sample por: python scraper/scraper.py
 
       - name: Terraform Init
         run: terraform init
         working-directory: terraform
 
       - name: Terraform Plan
-        run: |
-          terraform plan \
-            -var="alert_email=${{ secrets.ALERT_EMAIL }}" \
-            -out=tfplan
+        run: terraform plan -var="alert_email=${{ secrets.ALERT_EMAIL }}" -out=tfplan
         working-directory: terraform
 
       - name: Terraform Apply
