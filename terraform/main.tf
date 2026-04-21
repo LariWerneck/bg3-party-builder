@@ -12,7 +12,6 @@ terraform {
     }
   }
 
-
   backend "s3" {
     bucket = "bg3-party-builder-tfstate"
     key    = "terraform.tfstate"
