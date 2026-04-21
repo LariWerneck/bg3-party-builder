@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BG3 Party Builder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <p class="eyebrow">Baldur's Gate III</p>
+    <h1>Party Builder</h1>
+    <p class="sub">Discover which companions will thrive alongside your character</p>
+  </header>
+
+  <main>
+    <p class="section-label">Choose your playstyle</p>
+    <div class="style-grid" id="styleGrid"></div>
+
+    <div class="divider">or describe your own</div>
+
+    <div class="custom-input-wrap">
+      <input
+        type="text"
+        class="custom-input"
+        id="customInput"
+        placeholder="e.g. I want to be charming and manipulative..."
+        maxlength="120"
+      >
+      <button class="btn-primary" id="searchBtn">Build party</button>
+    </div>
+
+    <div id="result"></div>
+  </main>
+
+  <footer>
+    Data sourced from <a href="https://bg3.wiki" target="_blank">bg3.wiki</a> &mdash;
+    Built with AWS Lambda, Terraform &amp; GitHub Actions &mdash;
+    <a href="https://github.com/LariWerneck/bg3-party-builder" target="_blank">View source</a>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
