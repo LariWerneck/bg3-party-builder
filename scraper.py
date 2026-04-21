@@ -428,7 +428,7 @@ def clean_action(action: str) -> str:
     - Cleans extra whitespace and quotes
     - Returns short, readable sentence
     """
-    # Remove skill tags [SKILL]
+    # Remove skill tags 
     action = re.sub(r'\[.*?\]', '', action)
     
     # Remove dice rolls (DC XX) or similar
