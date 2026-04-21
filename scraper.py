@@ -27,7 +27,7 @@ API_URL    = "https://bg3.wiki/w/api.php"
 BASE_URL   = "https://bg3.wiki/wiki"
 OUTPUT_DIR = Path(__file__).parent / "data"
 
-# Rate limit — respeita o servidor
+# Rate limit 
 REQUEST_DELAY = 1.0  # segundos entre requests
 
 HEADERS = {
