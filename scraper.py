@@ -85,7 +85,7 @@ PAGES_TO_SCRAPE = {
     ],
 }
 
-# Companions e dados estaticos conhecidos (fallback se scraping falhar)
+# Companions e dados estaticos conhecidos 
 COMPANION_METADATA = {
     "Shadowheart": {
         "class": "Cleric",
