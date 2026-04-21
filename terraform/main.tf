@@ -12,12 +12,12 @@ terraform {
     }
   }
 
-  # Estado remoto — descomente após criar o bucket manualmente uma vez
-  # backend "s3" {
-  #   bucket = "bg3-party-builder-tfstate"
-  #   key    = "terraform.tfstate"
-  #   region = "us-east-2"
-  # }
+   Estado remoto — descomente após criar o bucket manualmente uma vez
+   backend "s3" {
+     bucket = "bg3-party-builder-tfstate"
+     key    = "terraform.tfstate"
+     region = "us-east-2"
+   }
 }
 
 provider "aws" {
