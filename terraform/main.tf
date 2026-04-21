@@ -13,11 +13,11 @@ terraform {
   }
 
 
-   backend "s3" {
-     bucket = "bg3-party-builder-tfstate"
-     key    = "terraform.tfstate"
-     region = "us-east-2"
-   }
+  backend "s3" {
+    bucket = "bg3-party-builder-tfstate"
+    key    = "terraform.tfstate"
+    region = "us-east-2"
+  }
 }
 
 provider "aws" {
