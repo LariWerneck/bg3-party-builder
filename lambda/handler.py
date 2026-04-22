@@ -42,83 +42,76 @@ PLAYSTYLES = {
         "label": "The Hero",
         "description": "Protect innocents, fight evil, honor above all",
         "keywords": [
-            "hero", "heroic", "protect", "innocent", "innocents", "justice",
-            "honor", "honourable", "good", "kind", "kindness", "help", "helpful",
-            "save", "noble", "righteous", "virtuous", "moral", "selfless",
-            "brave", "courage", "courageous", "defend", "defender", "champion",
-            "paladin", "lawful", "holy", "sacred", "pure", "light", "mercy",
-            "generous", "loyal", "loyalty", "sacrifice", "duty", "upright",
-            "beloved", "caring", "altruistic",
+            "hero", "heroic", "protect", "innocent", "justice", "honor",
+            "good", "kind", "help", "save", "noble", "righteous", "brave",
+            "courage", "virtue", "defender", "guardian", "mercy", "sacrifice",
+            "loyal", "duty", "pure", "light", "redemption", "holy", "selfless",
+            "encourage", "father", "soul", "devoted", "frontier", "blade",
+            "potential", "goodness", "break", "fork",
         ],
     },
     "villain": {
         "label": "The Villain",
         "description": "Cruel, manipulative, self-serving — power at any cost",
         "keywords": [
-            "villain", "evil", "cruel", "cruelty", "manipulate", "manipulative",
-            "manipulation", "selfish", "power", "dominate", "dark", "darkness",
-            "ruthless", "betray", "betrayal", "kill", "corrupt", "corruption",
-            "sinister", "wicked", "malicious", "cunning", "charming", "deceptive",
-            "deception", "scheming", "tyrant", "tyranny", "intimidate", "threaten",
-            "coerce", "vampire", "blood", "ash", "enemy", "destroy", "conquer",
-            "control", "harm", "hurt", "exploit", "backstab", "revenge", "vengeance",
-            "narcissist", "ambition", "ambitious", "ruthless", "cold", "calculated",
+            "villain", "evil", "cruel", "manipulate", "manipulative", "selfish",
+            "power", "dark", "ruthless", "betray", "kill", "dominate", "corrupt",
+            "vampire", "blood", "sinister", "wicked", "charming", "deceptive",
+            "cunning", "intimidate", "threaten", "coerce", "exploit", "murder",
+            "tyrant", "chaos", "shadow", "curse", "malicious", "lie", "slit",
+            "throat", "ash", "spike", "head", "gortash", "insulting",
         ],
     },
     "rogue": {
         "label": "The Rogue",
         "description": "Stealth, deception, and personal gain",
         "keywords": [
-            "rogue", "stealth", "stealthy", "sneak", "sneaky", "deceive",
-            "deception", "deceitful", "steal", "thief", "thievery", "pickpocket",
-            "cunning", "trick", "trickster", "pragmatic", "secret", "secretive",
-            "shadow", "hide", "assassin", "spy", "infiltrate", "con", "scheme",
-            "opportunist", "self-interest", "charming", "liar", "lie", "bluff",
-            "vampire", "blood", "feed", "guts", "back", "agree", "persuade",
-            "silver", "tongue", "subtle", "quiet", "invisible",
+            "rogue", "stealth", "sneak", "deceive", "deception", "steal",
+            "cunning", "trick", "pragmatic", "thief", "secret", "spy",
+            "vampire", "blood", "feed", "back", "pickpocket", "infiltrate",
+            "disguise", "blackmail", "bribe", "con", "scheme", "poison",
+            "lie", "bluff", "charm", "leverage", "drop", "watching", "safe",
+            "peering", "mind", "sneak", "priority", "sooner", "better",
         ],
     },
     "scholar": {
         "label": "The Scholar",
         "description": "Knowledge-seeking, magic-loving, thoughtful decisions",
         "keywords": [
-            "scholar", "magic", "magical", "arcane", "knowledge", "learn",
-            "study", "intelligent", "intelligence", "smart", "wise", "wisdom",
-            "wizard", "curious", "curiosity", "research", "book", "lore",
-            "history", "ancient", "mystical", "spell", "spellcaster", "intellectual",
-            "thoughtful", "analytical", "philosopher", "patient", "careful",
-            "strategic", "calm", "rational", "logical", "observer", "cautious",
-            "measured", "mysticism", "runes", "tome", "scroll", "artifact",
+            "magic", "magical", "scholar", "knowledge", "learn", "study",
+            "wizard", "intelligent", "curious", "arcane", "lore", "item",
+            "artefact", "artifact", "sacrifice", "stable", "deity", "divine",
+            "goddess", "shar", "picture", "kiss", "romance", "walk", "meal",
+            "friendship", "help", "find", "consume", "class", "allow", "curious",
+            "evening", "conversation", "complete", "worship",
         ],
     },
     "warrior": {
         "label": "The Warrior",
         "description": "Direct, strong, combat-focused",
         "keywords": [
-            "warrior", "fight", "fighter", "combat", "strong", "strength",
-            "direct", "battle", "aggressive", "brute", "powerful", "force",
-            "berserker", "barbarian", "soldier", "mercenary", "brutal", "violent",
-            "rage", "charge", "attack", "offensive", "physical", "tough",
-            "durable", "frontline", "melee", "sword", "axe", "weapon", "iron",
-            "fearless", "bold", "intimidating", "unstoppable", "crush", "glory",
-            "blood", "war", "honor", "battlefield", "conquer", "muscle",
+            "warrior", "fight", "combat", "strong", "direct", "battle",
+            "power", "strength", "aggressive", "brute", "barbarian", "berserker",
+            "sword", "axe", "shield", "armor", "charge", "attack", "smash",
+            "rage", "martial", "soldier", "fighter", "champion", "kill",
+            "soul", "coin", "upgrade", "heart", "touch", "combat", "voss",
+            "kith", "listen", "slit", "encourage", "kill",
         ],
     },
     "diplomat": {
         "label": "The Diplomat",
         "description": "Peaceful solutions, persuasion, protecting the vulnerable",
         "keywords": [
-            "diplomat", "diplomatic", "peaceful", "peace", "pacifist", "talk",
-            "persuade", "persuasion", "persuasive", "negotiate", "negotiation",
-            "kind", "gentle", "compassion", "compassionate", "help", "balance",
-            "harmony", "understanding", "empathy", "empathetic", "nonviolent",
-            "resolve", "mediate", "mediator", "humble", "selfless", "forgiving",
-            "forgiveness", "patient", "tolerant", "generous", "charitable",
-            "ally", "trust", "trustworthy", "support", "encourage", "inspire",
-            "heal", "words", "speech", "charisma", "silver", "friend", "ally",
+            "diplomat", "peaceful", "talk", "persuade", "negotiate", "peace",
+            "kind", "gentle", "compassion", "help", "balance", "mediate",
+            "empathy", "listen", "understand", "compromise", "trust", "apology",
+            "sorry", "happy", "join", "speaking", "option", "response", "evening",
+            "good", "please", "only", "things", "responses", "complete",
+            "conversation", "forgive", "mercy", "care", "support",
         ],
     },
 }
+
 
 _COMPANIONS = []
 _APPROVAL_EVENTS = []
@@ -283,12 +276,12 @@ def lambda_handler(event: dict, context: Any) -> dict:
         path   = event.get("path", "/")
         params = event.get("queryStringParameters") or {}
 
-        if path.endswith("/playstyles"):
+        if "/playstyles" in path:
             return {"statusCode": 200, "headers": headers,
                     "body": json.dumps({sid: {"label": s["label"], "description": s["description"]}
                                         for sid, s in PLAYSTYLES.items()})}
 
-        if path.endswith("/companion"):
+        if "/companion" in path and "/playstyles" not in path:
             name = params.get("name", "")
             if not name:
                 return {"statusCode": 400, "headers": headers,

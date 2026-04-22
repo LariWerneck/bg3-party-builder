@@ -38,27 +38,35 @@ async function buildParty(override) {
   const style = override
     || document.getElementById('customInput').value.trim()
     || activeStyle;
-
   if (!style) return;
 
   const btn = document.getElementById('searchBtn');
   btn.disabled = true;
-  document.getElementById('result').innerHTML =
-    '<div class="loading">Consulting the stars</div>';
+  setResult('<div class="loading">Consulting the stars</div>');
 
   try {
     const res = await fetch(`${API}/party?style=${encodeURIComponent(style)}`);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    renderResult(await res.json());
-  } catch (e) {
-    document.getElementById('result').innerHTML =
-      '<div class="error-msg">The oracle is unavailable. Try again shortly.</div>';
+    if (!res.ok) throw new Error();
+    renderParty(await res.json());
+  } catch {
+    setResult('<div class="error-msg">The oracle is unavailable. Try again shortly.</div>');
   } finally {
     btn.disabled = false;
   }
 }
 
-function renderResult(data) {
+async function showCompanion(name) {
+  setResult('<div class="loading">Summoning ' + name + '</div>');
+  try {
+    const res = await fetch(`${API}/companion?name=${encodeURIComponent(name)}`);
+    if (!res.ok) throw new Error();
+    renderCompanion(await res.json());
+  } catch {
+    setResult('<div class="error-msg">Could not reach the companion.</div>');
+  }
+}
+
+function renderParty(data) {
   const { playstyle: ps, party = [], avoid = [] } = data;
 
   let html = `
@@ -79,7 +87,9 @@ function renderResult(data) {
       <div class="companion-card">
         <div class="c-rank">${roman}</div>
         <div class="c-body">
-          <div class="c-name">${c.name}</div>
+          <div class="c-name">
+            <button class="name-link" onclick="showCompanion('${c.name}')">${c.name}</button>
+          </div>
           <div class="c-class">${c.class} &middot; ${c.race}</div>
           <div class="c-why">${trunc(c.why, 120)}</div>
           ${acts.length ? `
@@ -116,6 +126,71 @@ function renderResult(data) {
     });
   }
 
+  setResult(html);
+}
+
+function renderCompanion(c) {
+  const thresholds = c.approval_thresholds || {};
+
+  const bar = (val) => {
+    const pct = Math.round(((val + 50) / 150) * 100);
+    return `<div class="approval-track"><div class="approval-fill" style="width:${pct}%"></div></div>`;
+  };
+
+  let html = `
+    <button class="back-btn" onclick="history.back(); renderLastParty()">
+      &larr; Back to party
+    </button>
+
+    <div class="companion-detail-header">
+      <div class="cd-name">${c.name}</div>
+      <div class="cd-meta">${c.class} (${c.subclass}) &middot; ${c.race}</div>
+      <a class="cd-wiki" href="${c.url}" target="_blank">View on bg3.wiki &rarr;</a>
+    </div>
+
+    <div class="cd-grid">
+      <div class="cd-section">
+        <div class="cd-section-title">Approves of</div>
+        ${(c.likes || []).map(l => `<div class="tag tag-pos">${l}</div>`).join('')}
+      </div>
+      <div class="cd-section">
+        <div class="cd-section-title">Disapproves of</div>
+        ${(c.dislikes || []).map(d => `<div class="tag tag-neg">${d}</div>`).join('')}
+      </div>
+    </div>
+
+    <div class="cd-section-title" style="margin-top:1.5rem">Top approved actions <span class="events-count">${c.total_events} events total</span></div>
+    ${(c.top_approved || []).map(e => `
+      <div class="event-row event-pos">
+        <span class="event-val">+${e.value}</span>
+        <span class="event-action">${e.action}</span>
+      </div>
+    `).join('')}
+
+    <div class="cd-section-title" style="margin-top:1.2rem">Top disapproved actions</div>
+    ${(c.top_disapproved || []).map(e => `
+      <div class="event-row event-neg">
+        <span class="event-val">${e.value}</span>
+        <span class="event-action">${e.action}</span>
+      </div>
+    `).join('')}
+
+    <div class="cd-section-title" style="margin-top:1.5rem">Approval thresholds</div>
+    <div class="threshold-list">
+      ${Object.entries(thresholds).map(([k, v]) => `
+        <div class="threshold-row">
+          <span class="threshold-label">${k.replace(/_/g, ' ')}</span>
+          <span class="threshold-val ${v >= 0 ? 'pos' : 'neg'}">${v >= 0 ? '+' : ''}${v}</span>
+        </div>
+      `).join('')}
+    </div>
+  `;
+
+  setResult(html);
+}
+
+let _lastPartyHTML = '';
+function setResult(html) {
   document.getElementById('result').innerHTML = html;
 }
 
@@ -126,6 +201,8 @@ function trunc(str, n) {
 
 document.addEventListener('DOMContentLoaded', () => {
   initGrid();
-  document.getElementById('searchBtn')
-    .addEventListener('click', () => buildParty());
+  document.getElementById('searchBtn').addEventListener('click', () => buildParty());
+  document.getElementById('customInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') buildParty();
+  });
 });
