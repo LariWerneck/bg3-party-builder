@@ -126,6 +126,7 @@ function renderParty(data) {
     });
   }
 
+  _lastPartyHTML = html;
   setResult(html);
 }
 
@@ -138,7 +139,7 @@ function renderCompanion(c) {
   };
 
   let html = `
-    <button class="back-btn" onclick="history.back(); renderLastParty()">
+    <button class="back-btn" onclick="goBack()">
       &larr; Back to party
     </button>
 
@@ -190,8 +191,15 @@ function renderCompanion(c) {
 }
 
 let _lastPartyHTML = '';
+
 function setResult(html) {
   document.getElementById('result').innerHTML = html;
+}
+
+function goBack() {
+  if (_lastPartyHTML) {
+    document.getElementById('result').innerHTML = _lastPartyHTML;
+  }
 }
 
 function trunc(str, n) {
